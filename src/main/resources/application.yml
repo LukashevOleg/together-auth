@@ -1,0 +1,45 @@
+server:
+    port: 8081
+
+spring:
+    application:
+        name: auth
+
+    datasource:
+        url: jdbc:postgresql://localhost:5432/auth_db
+        username: ${DB_USERNAME:postgres}
+        password: ${DB_PASSWORD:postgres}
+        driver-class-name: org.postgresql.Driver
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: false
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: true
+
+    data:
+        redis:
+            host: ${REDIS_HOST:localhost}
+            port: ${REDIS_PORT:6379}
+            password: ${REDIS_PASSWORD:}
+            timeout: 2000ms
+
+jwt:
+    secret: ${JWT_SECRET:your-very-long-secret-key-at-least-256-bits-long-for-security}
+    expiration: 86400000       # 24 hours in ms
+    refresh-expiration: 604800000  # 7 days in ms
+
+otp:
+    length: 6
+    ttl-minutes: 5
+    max-attempts: 3
+
+twilio:
+    account-sid: ${TWILIO_ACCOUNT_SID:}
+    auth-token: ${TWILIO_AUTH_TOKEN:}
+    phone-number: ${TWILIO_PHONE_NUMBER:}
+    # Для разработки: true = не отправляем реальные SMS, пишем OTP в лог
+    mock-enabled: ${TWILIO_MOCK:true}
